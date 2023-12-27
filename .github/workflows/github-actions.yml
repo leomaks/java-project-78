@@ -16,13 +16,13 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           
-    #  - name: Lint
-   #     run: make lint
+      - name: Lint
+        run: make lint
         
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-       #   build-root-directory: app
+          build-root-directory: app
           arguments: build
           
       - name: Publish code coverage

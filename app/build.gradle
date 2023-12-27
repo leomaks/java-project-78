@@ -1,8 +1,11 @@
 plugins {
+
     id 'java'
     id 'application'
     id 'checkstyle'
     id 'jacoco'
+
+
 }
 compileJava {
     options.release = 21
@@ -49,15 +52,17 @@ test {
 
 test {
     useJUnitPlatform()
-    finalizedBy jacocoTestReport
+   // finalizedBy jacocoTestReport
 }
 
 jacocoTestReport {
-    dependsOn test
+  //  dependsOn test
     reports {
         xml.required = true
     }
 }
+
+tasks.jacocoTestReport { reports { xml.required.set(true) } }
 
 run {
     standardInput = System.in
