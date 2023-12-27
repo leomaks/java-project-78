@@ -40,3 +40,16 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+
+
+
+
+
+**/logs/
+
+bin
+.project*
+.idea/
+
+
