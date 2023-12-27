@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StringSchema {
+public class StringSchema extends BaseSchema {
     private boolean isRequired = false;
     private String substring = "";
     private boolean isValid = true;
@@ -50,14 +50,16 @@ public class StringSchema {
         }
 
     }
-
+    @Override
     public boolean isValid(Object str) {
 
 
         if (!(str == null) && !(str.getClass() == String.class)) {
             return  false;
         }
+
         var result = new StringSchema(isRequired, substring, isValid, minLength, (String) str);
+
         validate(result);
         return result.isValid;
     }
