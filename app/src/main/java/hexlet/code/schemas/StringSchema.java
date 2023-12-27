@@ -3,7 +3,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class StringSchema extends BaseSchema {
@@ -32,36 +32,38 @@ public class StringSchema extends BaseSchema {
         return this;
     }
 
-    private void validate(StringSchema result) {
+    private void validate() {
 
-        if ((result.isRequired) && (result.data == null || result.data == "")) {
-            result.isValid = false;
-        }
-        if ((result.data == null) && (!result.substring.equals(""))) {
-            result.isValid = false;
-        }
+        isValid = true;
 
-        if (!(result.data == null) && !result.data.contains(result.substring)) {
-            result.isValid = false;
+        if ((isRequired) && (data == null || data == "")) {
+            isValid = false;
+        }
+        if ((data == null) && (!substring.equals(""))) {
+            isValid = false;
         }
 
-        if (!(result.data == null) && (result.data.length() < result.minLength)) {
-            result.isValid = false;
+        if (!(data == null) && !data.contains(substring)) {
+            isValid = false;
+        }
+
+        if (!(data == null) && (data.length() < minLength)) {
+            isValid = false;
         }
 
     }
     @Override
     public boolean isValid(Object str) {
 
-
         if (!(str == null) && !(str.getClass() == String.class)) {
             return  false;
         }
 
-        var result = new StringSchema(isRequired, substring, isValid, minLength, (String) str);
 
-        validate(result);
-        return result.isValid;
+        data = (String) str;
+
+        validate();
+        return isValid;
     }
 
 

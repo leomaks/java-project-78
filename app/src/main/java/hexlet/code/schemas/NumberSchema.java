@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class NumberSchema extends BaseSchema {
@@ -35,34 +35,37 @@ public class NumberSchema extends BaseSchema {
     @Override
     public boolean isValid(Object num) {
 
+        isValid = true;
 
         if (!(num == null) && !(num.getClass() == Integer.class)) {
             return  false;
         }
 
-        var result = new NumberSchema(isRequired, isPositive, isValid, minBorder, maxBorder, (Integer) num);
+        data = (Integer) num;
 
-        validate(result);
-        return result.isValid;
+        validate();
+        return isValid;
     }
-    private void validate(NumberSchema result) {
+    private void validate() {
 
-        if ((result.isRequired) && (result.data == null)) {
-            result.isValid = false;
+        isValid = true;
+
+        if ((isRequired) && (data == null)) {
+            isValid = false;
         }
 
-        if ((result.data == null) && (result.isPositive) && result.isRequired) {
-            result.isValid = false;
+        if ((data == null) && (isPositive) && isRequired) {
+            isValid = false;
         }
 
 
 
-        if (!(result.data == null) && result.isPositive && (result.data <= 0)) {
-            result.isValid = false;
+        if (!(data == null) && isPositive && (data <= 0)) {
+            isValid = false;
         }
 
-        if (!(result.data == null) && (!(result.minBorder <= result.data) || !(result.data <= result.maxBorder))) {
-            result.isValid = false;
+        if (!(data == null) && (!(minBorder <= data) || !(data <= maxBorder))) {
+            isValid = false;
         }
 
     }
