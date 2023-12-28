@@ -2,11 +2,14 @@ package hexlet.code;
 //import hexlet.code.Validator;
 import hexlet.code.schemas.NumberSchema;
 import hexlet.code.schemas.StringSchema;
-
+import hexlet.code.schemas.MapSchema;
 
 //import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -131,15 +134,47 @@ public class AppTest {
         expected = false;
         assertEquals(expected, actual);
     }
+
+    @Test
+    public final void appTestMap() throws Exception {
+        boolean expected;
+        boolean actual;
+
+        var v = new Validator();
+        MapSchema schema = v.map();
+
+        actual = schema.isValid(null); // true
+        expected = true;
+        assertEquals(expected, actual);
+
+        schema.required();
+
+        actual = schema.isValid(null); //false
+        expected = false;
+        assertEquals(expected, actual);
+
+        actual = schema.isValid(new HashMap()); // true
+        expected = true;
+        assertEquals(expected, actual);
+
+        Map<String, String> data = new HashMap<>();
+        data.put("key1", "value1");
+
+        actual = schema.isValid(data); // true
+        expected = true;
+        assertEquals(expected, actual);
+
+        schema.sizeof(2);
+
+        actual = schema.isValid(data); // false
+        expected = false;
+        assertEquals(expected, actual);
+
+        data.put("key2", "value2");
+        actual = schema.isValid(data); // true
+        expected = true;
+        assertEquals(expected, actual);
+
+    }
 }
-/*
-
-
-//  Ноль — не положительное число
-
-
-schema.isValid(10); // true
-schema.isValid(4); // false
-schema.isValid(11); // false
-*/
 

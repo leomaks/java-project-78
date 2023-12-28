@@ -33,8 +33,6 @@ public class NumberSchema extends BaseSchema {
     @Override
     public boolean isValid(Object num) {
 
-        isValid = true;
-
         if (!(num == null) && !(num.getClass() == Integer.class)) {
             return  false;
         }

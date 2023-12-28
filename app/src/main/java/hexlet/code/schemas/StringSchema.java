@@ -1,5 +1,4 @@
 package hexlet.code.schemas;
-
 import lombok.NoArgsConstructor;
 
 
@@ -31,6 +30,28 @@ public class StringSchema extends BaseSchema {
         return this;
     }
 
+    @Override
+    public boolean isValid(Object str) {
+
+        if (!(str == null) && !(str.getClass() == String.class)) {
+            return  false;
+        }
+
+        data = (String) str;
+
+        validate();
+        return isValid;
+    }
+
+    private void validate() {
+
+        isValid = true;
+        validateNotNull();
+        validateSubstring();
+        validateMinLength();
+
+    }
+
     private void validateNotNull() {
         if ((isRequired) && (data == null || data == "")) {
             isValid = false;
@@ -53,25 +74,7 @@ public class StringSchema extends BaseSchema {
             isValid = false;
         }
     }
-    private void validate() {
 
-        isValid = true;
-        validateNotNull();
-        validateSubstring();
-        validateMinLength();
 
-    }
-    @Override
-    public boolean isValid(Object str) {
-
-        if (!(str == null) && !(str.getClass() == String.class)) {
-            return  false;
-        }
-
-        data = (String) str;
-
-        validate();
-        return isValid;
-    }
 
 }
