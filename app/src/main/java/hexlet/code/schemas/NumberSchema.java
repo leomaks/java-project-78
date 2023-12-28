@@ -28,7 +28,7 @@ public class NumberSchema extends BaseSchema {
         return this;
     }
     @Override
-    public boolean isValid(Object num) {
+    public final boolean isValid(Object num) {
 
         if (!(num == null) && !(num.getClass() == Integer.class)) {
             return  false;

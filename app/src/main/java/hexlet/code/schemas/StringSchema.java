@@ -31,7 +31,7 @@ public class StringSchema extends BaseSchema {
     }
 
     @Override
-    public boolean isValid(Object str) {
+    public final boolean isValid(Object str) {
 
         if (!(str == null) && !(str.getClass() == String.class)) {
             return  false;

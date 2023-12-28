@@ -22,7 +22,7 @@ public class MapSchema extends BaseSchema {
         return this;
     }
     @Override
-    public boolean isValid(Object num) {
+    public final boolean isValid(Object num) {
 
         if (!(num == null) && !(num instanceof Map)) {
             return  false;
@@ -56,7 +56,7 @@ public class MapSchema extends BaseSchema {
             isValid = false;
         }
     }
-    public void validateShape() {
+    private void validateShape() {
         data.forEach((key, value) -> {
             if (!schemas.get(key).isValid(value)) {
                 isValid = false;
@@ -64,7 +64,7 @@ public class MapSchema extends BaseSchema {
         });
     }
 
-    public void shape(Map<String, BaseSchema> validateSchemas) {
+    public final void shape(Map<String, BaseSchema> validateSchemas) {
         schemas = validateSchemas;
         isRequiredShape = true;
     }
