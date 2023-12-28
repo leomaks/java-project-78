@@ -7,8 +7,11 @@ import java.util.Map;
 public class MapSchema extends BaseSchema {
     private boolean isRequired = false;
     private boolean isValid = true;
+    private boolean isRequiredShape = false;
+
     private int size = 0;
-    private Map data;
+    private Map<String, Object> data;
+    private Map<String, BaseSchema> schemas;
 
     public MapSchema required() {
         this.isRequired = true;
@@ -19,7 +22,6 @@ public class MapSchema extends BaseSchema {
         return this;
     }
     @Override
-
     public boolean isValid(Object num) {
 
         if (!(num == null) && !(num instanceof Map)) {
@@ -33,9 +35,14 @@ public class MapSchema extends BaseSchema {
     }
 
     private void validate() {
+
         isValid = true;
         validateNotNull();
         validateSize();
+
+        if (isRequiredShape) {
+            validateShape();
+        }
 
     }
     private void validateNotNull() {
@@ -48,6 +55,18 @@ public class MapSchema extends BaseSchema {
         if ((size != 0) && (data.size() != size)) {
             isValid = false;
         }
+    }
+    public void validateShape() {
+        data.forEach((key, value) -> {
+            if (!schemas.get(key).isValid(value)) {
+                isValid = false;
+            }
+        });
+    }
+
+    public void shape(Map<String, BaseSchema> validateSchemas) {
+        schemas = validateSchemas;
+        isRequiredShape = true;
     }
 
 }
