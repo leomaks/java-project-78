@@ -69,6 +69,10 @@ public class AppTest {
         actual =   schema.isValid("what does the fox say"); // false
         expected = false;
         assertEquals(expected, actual);
+
+        actual =   schema.minLength(10).isValid("what"); // false
+        expected = false;
+        assertEquals(expected, actual);
     }
 
     @Test

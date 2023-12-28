@@ -1,12 +1,10 @@
 package hexlet.code.schemas;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+
 import lombok.NoArgsConstructor;
 
-
 @NoArgsConstructor
-@AllArgsConstructor
+
 public class NumberSchema extends BaseSchema {
     private boolean isRequired = false;
     private boolean isPositive = false;
@@ -46,27 +44,37 @@ public class NumberSchema extends BaseSchema {
         validate();
         return isValid;
     }
+
     private void validate() {
-
         isValid = true;
-
+        validateNotNull();
+        validatePositive();
+        validateRange();
+    }
+    private void validateNotNull() {
         if ((isRequired) && (data == null)) {
             isValid = false;
         }
+    }
 
+    private void validatePositive() {
         if ((data == null) && (isPositive) && isRequired) {
             isValid = false;
         }
-
-
 
         if (!(data == null) && isPositive && (data <= 0)) {
             isValid = false;
         }
 
+    }
+
+    private void validateRange() {
         if (!(data == null) && (!(minBorder <= data) || !(data <= maxBorder))) {
             isValid = false;
         }
 
     }
+
+
+
 }
