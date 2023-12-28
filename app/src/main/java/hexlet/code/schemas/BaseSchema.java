@@ -1,8 +1,8 @@
 package hexlet.code.schemas;
 
 public abstract class BaseSchema {
-    private final boolean isValid = true;
-    public boolean isValid(Object str) {
+    private boolean isValid = true;
+    public final boolean isValid(Object str) {
         return isValid;
     }
 
