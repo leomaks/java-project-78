@@ -13,11 +13,11 @@ public class MapSchema extends BaseSchema {
     private Map<String, Object> data;
     private Map<String, BaseSchema> schemas;
 
-    public MapSchema required() {
+    public final MapSchema required() {
         this.isRequired = true;
         return this;
     }
-    public MapSchema sizeof(int n) {
+    public final MapSchema sizeof(int n) {
         this.size = n;
         return this;
     }

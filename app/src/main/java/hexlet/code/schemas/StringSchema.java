@@ -15,17 +15,17 @@ public class StringSchema extends BaseSchema {
 
 
 
-    public StringSchema required() {
+    public final StringSchema required() {
         this.isRequired = true;
         return this;
     }
 
-    public StringSchema minLength(int min) {
+    public final StringSchema minLength(int min) {
         this.minLength = min;
         return this;
     }
 
-    public StringSchema contains(String string) {
+    public final StringSchema contains(String string) {
         this.substring = string;
         return this;
     }
