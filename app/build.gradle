@@ -7,7 +7,7 @@ plugins {
 
 }
 compileJava {
-    options.release = 21
+    options.release = 20
 }
 group = 'hexlet.code'
 version = '1.0-SNAPSHOT'
@@ -51,7 +51,7 @@ test {
 
 test {
     useJUnitPlatform()
-   // finalizedBy jacocoTestReport
+
 }
 
 jacocoTestReport {
@@ -60,7 +60,6 @@ jacocoTestReport {
     }
 }
 
-//tasks.jacocoTestReport { reports { xml.required.set(true) } }
 
 run {
     standardInput = System.in
