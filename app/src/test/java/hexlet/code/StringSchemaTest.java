@@ -20,7 +20,7 @@ public class StringSchemaTest {
 
     }
     @BeforeEach
-    public void beforeEach() {
+    public final void beforeEach() {
         schema = v.string();
     }
 

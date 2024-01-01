@@ -20,7 +20,7 @@ public class NumberSchemaTest {
 
     }
     @BeforeEach
-    public void beforeEach() {
+    public final void beforeEach() {
         schema = v.number();
     }
 

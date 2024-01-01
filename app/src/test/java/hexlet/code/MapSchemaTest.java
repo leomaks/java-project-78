@@ -22,7 +22,7 @@ public class MapSchemaTest {
 
     }
     @BeforeEach
-    public void beforeEach() {
+    public final void beforeEach() {
         schema = v.map();
     }
 
