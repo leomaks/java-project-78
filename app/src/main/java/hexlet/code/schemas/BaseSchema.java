@@ -9,7 +9,7 @@ public abstract class BaseSchema {
     public abstract boolean validateClass(Object str);
 
 
-    public boolean isValid(Object input) {
+    public final boolean isValid(Object input) {
 
 
         if (!validateClass(input)) {

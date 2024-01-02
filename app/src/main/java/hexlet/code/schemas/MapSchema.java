@@ -29,16 +29,16 @@ public class MapSchema extends BaseSchema {
     }
 
     @Override
-    public boolean validateClass(Object input) {
+    public final boolean validateClass(Object input) {
         return (input == null) || (input instanceof Map);
     }
 
 
-    public boolean validateShape(Map<String, Object> data) {
+    public final boolean validateShape(Map<String, Object> data) {
         return data.entrySet().stream().allMatch(x -> schemas.get(x.getKey()).isValid(x.getValue()));
     }
     @Override
-    public ArrayList<Predicate<BaseSchema>> fillValidateList(Object input) {
+    public final ArrayList<Predicate<BaseSchema>> fillValidateList(Object input) {
 
         ArrayList<Predicate<BaseSchema>> predList = new ArrayList<>();
 

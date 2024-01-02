@@ -29,13 +29,13 @@ public class StringSchema extends BaseSchema {
     }
 
     @Override
-    public boolean validateClass(Object str) {
+    public final boolean validateClass(Object str) {
         return  (str == null) || (str.getClass() == String.class);
     }
 
 
     @Override
-    public ArrayList<Predicate<BaseSchema>> fillValidateList(Object input) {
+    public final ArrayList<Predicate<BaseSchema>> fillValidateList(Object input) {
         ArrayList<Predicate<BaseSchema>> predList = new ArrayList<>();
         var data = (String) input;
 

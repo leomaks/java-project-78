@@ -31,12 +31,12 @@ public class NumberSchema extends BaseSchema {
     }
 
     @Override
-    public boolean validateClass(Object str) {
+    public final boolean validateClass(Object str) {
         return (str == null) || (str.getClass() == Integer.class);
     }
 
     @Override
-    public ArrayList<Predicate<BaseSchema>> fillValidateList(Object input) {
+    public final ArrayList<Predicate<BaseSchema>> fillValidateList(Object input) {
 
         ArrayList<Predicate<BaseSchema>> predList = new ArrayList<>();
         var data = (Integer) input;
