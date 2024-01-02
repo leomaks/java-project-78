@@ -1,18 +1,16 @@
 package hexlet.code.schemas;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.function.Predicate;
+
 
 @NoArgsConstructor
 
 public class StringSchema extends BaseSchema {
     private boolean isRequired = false;
     private String substring = "";
-    private boolean isValid = true;
-
-
     private int minLength = 0;
-    private String data;
-
 
 
     public final StringSchema required() {
@@ -31,48 +29,22 @@ public class StringSchema extends BaseSchema {
     }
 
     @Override
-    public final boolean isValid(Object str) {
-
-        if (!(str == null) && !(str.getClass() == String.class)) {
-            return  false;
-        }
-
-        data = (String) str;
-
-        validate();
-        return isValid;
+    public boolean validateClass(Object str) {
+        return  (str == null) || (str.getClass() == String.class);
     }
 
-    private void validate() {
 
-        isValid = true;
-        validateNotNull();
-        validateSubstring();
-        validateMinLength();
+    @Override
+    public ArrayList<Predicate<BaseSchema>> fillValidateList(Object input) {
+        ArrayList<Predicate<BaseSchema>> predList = new ArrayList<>();
+        var data = (String) input;
 
-    }
+        predList.add(p -> !(isRequired && (data == null || data == "")));
+        predList.add(p -> !(data == null && !substring.equals("")));
+        predList.add(p -> !((data != null) && !data.contains(substring)));
+        predList.add(p -> !((data != null) && (data.length() < minLength)));
 
-    private void validateNotNull() {
-        if ((isRequired) && (data == null || data == "")) {
-            isValid = false;
-        }
-    }
-
-    private void validateSubstring() {
-
-        if ((data == null) && (!substring.equals(""))) {
-            isValid = false;
-        }
-
-        if (!(data == null) && !data.contains(substring)) {
-            isValid = false;
-        }
-    }
-
-    private void validateMinLength() {
-        if (!(data == null) && (data.length() < minLength)) {
-            isValid = false;
-        }
+        return predList;
     }
 
 }

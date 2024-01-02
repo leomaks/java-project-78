@@ -25,12 +25,12 @@ public class NumberSchemaTest {
     }
 
     @Test
-    public final void testNullIsValid() {
+    public final void testNullIsValid() throws Exception {
         assertTrue(schema.isValid(null));
     }
 
     @Test
-    public final void testPositive() {
+    public final void testPositive() throws Exception {
         schema.positive();
         assertTrue(schema.isValid(null));
         assertTrue(schema.isValid(89));
@@ -38,7 +38,7 @@ public class NumberSchemaTest {
     }
 
     @Test
-    public final void testRequired() {
+    public final void testRequired() throws Exception {
 
         schema.positive().required();
 
@@ -51,7 +51,7 @@ public class NumberSchemaTest {
     }
 
     @Test
-    public final void testRange() {
+    public final void testRange() throws Exception {
 
         schema.range(5, 10);
 

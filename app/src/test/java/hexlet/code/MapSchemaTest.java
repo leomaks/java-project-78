@@ -55,3 +55,6 @@ public class MapSchemaTest {
         assertTrue(schema.isValid(data));
     }
 }
+
+
+

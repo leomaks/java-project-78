@@ -7,7 +7,6 @@ import hexlet.code.schemas.MapSchema;
 public class Validator {
     public Validator() {
     }
-
     public static StringSchema string() {
         return new StringSchema();
     }
@@ -19,4 +18,8 @@ public class Validator {
     public static MapSchema map() {
         return new MapSchema();
     }
+
 }
+
+
+

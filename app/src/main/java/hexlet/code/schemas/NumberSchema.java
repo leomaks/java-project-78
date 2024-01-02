@@ -1,16 +1,18 @@
 package hexlet.code.schemas;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.function.Predicate;
+
 @NoArgsConstructor
 public class NumberSchema extends BaseSchema {
     private boolean isRequired = false;
     private boolean isPositive = false;
-    private boolean isValid = true;
 
 
     private int minBorder = Integer.MIN_VALUE;
     private int maxBorder = Integer.MAX_VALUE;
-    private Integer data;
+
 
     public final NumberSchema required() {
         isRequired = true;
@@ -27,45 +29,28 @@ public class NumberSchema extends BaseSchema {
         maxBorder = max;
         return this;
     }
+
     @Override
-    public final boolean isValid(Object num) {
-
-        if (!(num == null) && !(num.getClass() == Integer.class)) {
-            return  false;
-        }
-
-        data = (Integer) num;
-
-        validate();
-        return isValid;
+    public boolean validateClass(Object str) {
+        return (str == null) || (str.getClass() == Integer.class);
     }
 
-    private void validate() {
-        isValid = true;
-        validateNotNull();
-        validatePositive();
-        validateRange();
-    }
-    private void validateNotNull() {
-        if ((isRequired) && (data == null)) {
-            isValid = false;
-        }
+    @Override
+    public ArrayList<Predicate<BaseSchema>> fillValidateList(Object input) {
+
+        ArrayList<Predicate<BaseSchema>> predList = new ArrayList<>();
+        var data = (Integer) input;
+
+
+        predList.add(p -> !(isRequired && data == null));
+        predList.add(p ->  !(data == null && isPositive && isRequired));
+
+        predList.add(p -> !((data != null) && isPositive && (data <= 0)));
+        predList.add(p -> !((data != null) && ((minBorder > data) || (data > maxBorder))));
+
+        return predList;
+
     }
 
-    private void validatePositive() {
-        if ((data == null) && (isPositive) && isRequired) {
-            isValid = false;
-        }
-
-        if (!(data == null) && isPositive && (data <= 0)) {
-            isValid = false;
-        }
-    }
-
-    private void validateRange() {
-        if (!(data == null) && (!(minBorder <= data) || !(data <= maxBorder))) {
-            isValid = false;
-        }
-    }
 
 }

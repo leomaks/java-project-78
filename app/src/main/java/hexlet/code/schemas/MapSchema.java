@@ -1,16 +1,18 @@
 package hexlet.code.schemas;
 
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.function.Predicate;
 
 @NoArgsConstructor
 public class MapSchema extends BaseSchema {
     private boolean isRequired = false;
-    private boolean isValid = true;
     private boolean isRequiredShape = false;
 
     private int size = 0;
-    private Map<String, Object> data;
+
     private Map<String, BaseSchema> schemas;
 
     public final MapSchema required() {
@@ -21,52 +23,38 @@ public class MapSchema extends BaseSchema {
         this.size = n;
         return this;
     }
-    @Override
-    public final boolean isValid(Object num) {
-
-        if (!(num == null) && !(num instanceof Map)) {
-            return  false;
-        }
-
-        data = (Map) num;
-
-        validate();
-        return isValid;
-    }
-
-    private void validate() {
-
-        isValid = true;
-        validateNotNull();
-        validateSize();
-
-        if (isRequiredShape) {
-            validateShape();
-        }
-
-    }
-    private void validateNotNull() {
-        if ((isRequired) && (data == null)) {
-            isValid = false;
-        }
-    }
-
-    private void validateSize() {
-        if ((size != 0) && (data.size() != size)) {
-            isValid = false;
-        }
-    }
-    private void validateShape() {
-        data.forEach((key, value) -> {
-            if (!schemas.get(key).isValid(value)) {
-                isValid = false;
-            }
-        });
-    }
-
-    public final void shape(Map<String, BaseSchema> validateSchemas) {
-        schemas = validateSchemas;
+    public final void shape(Map<String, BaseSchema> validateSchema) {
+        schemas = validateSchema;
         isRequiredShape = true;
     }
 
+    @Override
+    public boolean validateClass(Object input) {
+        return (input == null) || (input instanceof Map);
+    }
+
+
+    public boolean validateShape(Map<String, Object> data) {
+        return data.entrySet().stream().allMatch(x -> schemas.get(x.getKey()).isValid(x.getValue()));
+    }
+    @Override
+    public ArrayList<Predicate<BaseSchema>> fillValidateList(Object input) {
+
+        ArrayList<Predicate<BaseSchema>> predList = new ArrayList<>();
+
+        Map<String, Object> data = (Map) input;
+
+        predList.add(p -> !(isRequired && data == null));
+        predList.add(p -> !(((size != 0) && (data.size() != size))));
+
+        if (isRequiredShape) {
+            predList.add(p -> validateShape(data));
+        }
+        return predList;
+    }
+
+
+
 }
+
+
