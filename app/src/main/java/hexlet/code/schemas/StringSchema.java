@@ -1,30 +1,23 @@
 package hexlet.code.schemas;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.function.Predicate;
-
-
 @NoArgsConstructor
 
 public class StringSchema extends BaseSchema {
-    private boolean isRequired = false;
-    private String substring = "";
-    private int minLength = 0;
 
 
     public final StringSchema required() {
-        this.isRequired = true;
+        addValidation(p -> (p.data != null) && (p.data != ""));
         return this;
     }
 
     public final StringSchema minLength(int min) {
-        this.minLength = min;
+        addValidation(v -> (v == null) || ((String) v.data).length() >= min);
         return this;
     }
 
-    public final StringSchema contains(String string) {
-        this.substring = string;
+    public final StringSchema contains(String substring) {
+        addValidation(p -> (p == null) || ((String) p.data).contains(substring));
         return this;
     }
 
@@ -33,18 +26,5 @@ public class StringSchema extends BaseSchema {
         return  (str == null) || (str.getClass() == String.class);
     }
 
-
-    @Override
-    public final ArrayList<Predicate<BaseSchema>> fillValidateList(Object input) {
-        ArrayList<Predicate<BaseSchema>> predList = new ArrayList<>();
-        var data = (String) input;
-
-        predList.add(p -> !(isRequired && (data == null || data == "")));
-        predList.add(p -> !(data == null && !substring.equals("")));
-        predList.add(p -> !((data != null) && !data.contains(substring)));
-        predList.add(p -> !((data != null) && (data.length() < minLength)));
-
-        return predList;
-    }
 
 }

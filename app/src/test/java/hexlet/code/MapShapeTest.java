@@ -85,6 +85,7 @@ public class MapShapeTest {
         assertTrue(schema.isValid(human7));
 
     }
+
 }
 
 

@@ -21,6 +21,7 @@ public class MapSchemaTest {
         v = new Validator();
 
     }
+
     @BeforeEach
     public final void beforeEach() {
         schema = v.map();
@@ -54,6 +55,8 @@ public class MapSchemaTest {
         data.put("key2", "value2");
         assertTrue(schema.isValid(data));
     }
+
+
 }
 
 
