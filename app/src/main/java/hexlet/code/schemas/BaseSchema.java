@@ -5,24 +5,13 @@ import java.util.function.Predicate;
 
 public abstract class BaseSchema {
 
-    private ArrayList<Predicate<BaseSchema>> validations = new ArrayList<>();
-    public abstract boolean validateClass(Object str);
-    public Object data;
-
+    private ArrayList<Predicate<Object>> validations = new ArrayList<>();
 
     public final boolean isValid(Object input) {
-
-        data = input;
-
-        if (!validateClass(input)) {
-            return  false;
-        }
-
-        return validations.stream().allMatch(p -> p.test(this));
+        return validations.stream().allMatch(p -> p.test(input));
     }
 
-
-    public final void addValidation(Predicate<BaseSchema> pred) {
+    public final void addValidation(Predicate<Object> pred) {
         validations.add(pred);
     }
 

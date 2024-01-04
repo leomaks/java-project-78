@@ -1,34 +1,29 @@
 package hexlet.code.schemas;
 
-import lombok.NoArgsConstructor;
 import java.util.Map;
 
 
-@NoArgsConstructor
 public class MapSchema extends BaseSchema {
 
+    public MapSchema() {
+        addValidation(p -> (p == null) || (p instanceof Map));
+    }
 
     public final MapSchema required() {
-        addValidation(p -> p.data != null);
+        addValidation(p -> p != null);
         return this;
     }
     public final MapSchema sizeof(int n) {
-        addValidation(p -> ((Map) p.data).size() == n);
+        addValidation(p -> ((Map) p).size() == n);
         return this;
     }
     public final void shape(Map<String, BaseSchema> schemas) {
-        addValidation(p -> validateShape(schemas));
-    }
-
-    @Override
-    public final boolean validateClass(Object input) {
-        return (input == null) || (input instanceof Map);
+        addValidation(p -> validateShape(schemas,  (Map) p));
     }
 
 
-    public final boolean validateShape(Map<String, BaseSchema> schemas) {
-
-        return ((Map<String, Object>) this.data).entrySet().stream()
+    public final boolean validateShape(Map<String, BaseSchema> schemas, Map<String, Object> input) {
+        return input.entrySet().stream()
                 .allMatch(x -> schemas.get(x.getKey()).isValid(x.getValue()));
     }
 

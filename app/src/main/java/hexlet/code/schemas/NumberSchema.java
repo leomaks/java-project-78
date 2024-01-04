@@ -1,28 +1,24 @@
 package hexlet.code.schemas;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 public class NumberSchema extends BaseSchema {
 
+    public NumberSchema() {
+        addValidation(p -> p == null || (p instanceof Integer));
+    }
 
     public final NumberSchema required() {
-        addValidation(p -> p.data != null);
+        addValidation(p -> p != null);
         return this;
     }
 
     public final NumberSchema positive() {
-        addValidation(p -> (data == null) || (Integer) p.data > 0);
+        addValidation(p -> (p == null) || (Integer) p > 0);
         return this;
     }
 
     public final NumberSchema range(int min, int max) {
-        addValidation(p -> (data == null) || (min <= (Integer) p.data && (Integer) p.data <= max));
+        addValidation(p -> (p == null) || (min <= (Integer) p && (Integer) p <= max));
         return this;
-    }
-
-    @Override
-    public final boolean validateClass(Object str) {
-        return (str == null) || (str.getClass() == Integer.class);
     }
 
 
