@@ -4,7 +4,6 @@ import hexlet.code.schemas.NumberSchema;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import org.junit.jupiter.api.BeforeAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -14,13 +13,9 @@ public class NumberSchemaTest {
     private static Validator v;
     private static NumberSchema schema;
 
-    @BeforeAll
-    public static void init() {
-        v = new Validator();
-
-    }
     @BeforeEach
     public final void beforeEach() {
+        v = new Validator();
         schema = v.number();
     }
 

@@ -8,7 +8,8 @@ public class StringSchema extends BaseSchema {
     }
 
     public final StringSchema required() {
-        addValidation(p -> (p != null) && (p != ""));
+        addNotNullValidation();
+        addValidation(p -> p != "");
         return this;
     }
 

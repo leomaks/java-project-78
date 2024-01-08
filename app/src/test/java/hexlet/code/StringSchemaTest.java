@@ -1,7 +1,6 @@
 package hexlet.code;
 
 import hexlet.code.schemas.StringSchema;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,13 +14,9 @@ public class StringSchemaTest {
     private static Validator v;
     private static StringSchema schema;
 
-    @BeforeAll
-    public static void init() {
-        v = new Validator();
-
-    }
     @BeforeEach
     public final void beforeEach() {
+        v = new Validator();
         schema = v.string();
     }
 

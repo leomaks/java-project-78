@@ -10,11 +10,11 @@ public class MapSchema extends BaseSchema {
     }
 
     public final MapSchema required() {
-        addValidation(p -> p != null);
+        addNotNullValidation();
         return this;
     }
     public final MapSchema sizeof(int n) {
-        addValidation(p -> ((Map) p).size() == n);
+        addValidation(p -> (p == null) || ((Map) p).size() == n);
         return this;
     }
     public final void shape(Map<String, BaseSchema> schemas) {

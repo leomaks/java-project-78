@@ -35,14 +35,22 @@ public class MapShapeTest {
         human.put("name", "Kolya");
         human.put("age", 100);
 
+
+        Map<String, BaseSchema> schemas = new HashMap<>();
+        schemas.put("name", v.string().required().minLength(4));
+        schemas.put("age", v.number().required().positive());
+
+        schema.shape(schemas);
+
         assertTrue(schema.isValid(human));
     }
 
     @Test
     public final void testNullEmpty() {
         Map<String, Object> human2 = new HashMap<>();
+
         human2.put("name", "Maya");
-        human2.put("age", null);
+        human2.put("age", 11);
 
         assertTrue(schema.isValid(human2));
 

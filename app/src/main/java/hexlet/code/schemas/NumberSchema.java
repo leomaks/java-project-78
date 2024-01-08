@@ -7,7 +7,7 @@ public class NumberSchema extends BaseSchema {
     }
 
     public final NumberSchema required() {
-        addValidation(p -> p != null);
+        addNotNullValidation();
         return this;
     }
 

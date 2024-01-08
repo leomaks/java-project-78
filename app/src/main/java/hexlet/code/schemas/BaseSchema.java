@@ -15,6 +15,10 @@ public abstract class BaseSchema {
         validations.add(pred);
     }
 
+    public final void addNotNullValidation() {
+        addValidation(p -> p != null);
+    }
+
 }
 
 
